@@ -1,0 +1,25 @@
+$primary-dark: #00796b;
+$primary: #009688;
+$primary-light: #b2dfdb;
+
+$accent: #ffc107;
+$text-primary: #212121;
+$text-secundary: #757575;
+$divider: #bdbdbd;
+
+html,
+body {
+  margin: 0;
+  color: $text-primary;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bg-primary {
+  background-color: $primary;
+  color: white;
+}
+
+.bg-primary-dark {
+  background-color: $primary-dark;
+  color: white;
+}
