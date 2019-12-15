@@ -1,0 +1,16 @@
+{
+  "name": "abirechner",
+  "version": "0.1.0",
+  "description": "App zur Berechnung der Abinote",
+  "main": "dist/index.html",
+  "scripts": {
+    "run": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "author": "Konstantin Eger",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "typescript": "^3.7.3"
+  }
+}
