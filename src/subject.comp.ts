@@ -45,7 +45,7 @@ class Subject {
           margin: 3px 0px;
         }
         .subject input,
-        .subject button {
+        .subject .add {
           float: right;
         }
         .subject input {
@@ -54,16 +54,34 @@ class Subject {
       </style>
       <div class="subject" id=${this.subjectID}>
         <b>${this.subjectName}</b>
-        <span class="avg">${this.semAvg[semester - 1] < 0 ? '/' : Math.round(this.semAvg[semester - 1])}</span>
+        <span class="avg">
+          ${(() => {
+            return this.semAvg[semester - 1] < 0 ? '/' : Math.round(this.semAvg[semester - 1]);
+          })()}
+        </span>
         <br />
         <div class="subjectbody">
           <div class="marktype">Klausuren:</div>
           ${this.exams[semester - 1].map(e => `${e}, `)}
-          <button @click=${this.addExam(semester).bind(this)}>+</button>
+          ${(() => {
+            if (this.exams[semester - 1].length !== 0) {
+              return html`
+                <button @click=${this.removeExam(semester).bind(this)}>-</button>
+              `;
+            }
+          })()}
+          <button class="add" @click=${this.addExam(semester).bind(this)}>+</button>
           <input id=${this.subjectID + '-exInput'} type="number" />
           <br />
           Noten: ${this.marks[semester - 1].map(m => `${m}, `)}
-          <button @click=${this.addMark(semester).bind(this)}>+</button>
+          ${(() => {
+            if (this.marks[semester - 1].length !== 0) {
+              return html`
+                <button @click=${this.removeMark(semester).bind(this)}>-</button>
+              `;
+            }
+          })()}
+          <button class="add" @click=${this.addMark(semester).bind(this)}>+</button>
           <input id=${this.subjectID + '-mkInput'} type="number" />
         </div>
       </div>
@@ -78,6 +96,8 @@ class Subject {
       if (toAvg.length > 0) {
         const avg = toAvg.reduce((a, v) => a + v, 0) / toAvg.length;
         this.semAvg[s] = avg;
+      } else {
+        this.semAvg[s] = -1;
       }
     }
     localStorage.setItem(this.subjectID, JSON.stringify(this));
@@ -96,6 +116,14 @@ class Subject {
     };
   }
 
+  private removeExam(sem: number) {
+    return () => {
+      this.exams[sem - 1].pop();
+      this.calculateAvg();
+      updateApp();
+    };
+  }
+
   private addMark(sem: number) {
     return () => {
       const input: HTMLInputElement = document.querySelector('#' + this.subjectID + '-mkInput');
@@ -106,6 +134,13 @@ class Subject {
         this.calculateAvg();
         updateApp();
       }
+    };
+  }
+  private removeMark(sem: number) {
+    return () => {
+      this.marks[sem - 1].pop();
+      this.calculateAvg();
+      updateApp();
     };
   }
 }
