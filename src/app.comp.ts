@@ -33,6 +33,7 @@ const App = () => {
       <span class="header-name">Abirechner</span>
     </div>
     ${tabnav.render()}
+    <button @click=${() => localStorage.clear()}>clear</button>
   `;
 };
 

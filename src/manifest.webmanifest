@@ -1,0 +1,10 @@
+{
+  "name": "Abirechner",
+  "short_name": "Abirechner",
+  "theme_color": "#009688",
+  "background_color": "#00796b",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "/"
+}

@@ -14,6 +14,16 @@ class Subject {
     this.exams = [[], [], [], []];
     this.marks = [[], [], [], []];
     this.semAvg = [-1, -1, -1, -1];
+
+    const storage: object | string = localStorage.getItem(subjectID);
+    if (typeof storage === 'object') {
+      localStorage.setItem(subjectID, JSON.stringify(this));
+    } else if (typeof storage === 'string') {
+      const s: Subject = JSON.parse(storage);
+      this.exams = s.exams;
+      this.marks = s.marks;
+      this.semAvg = s.semAvg;
+    }
   }
 
   public render(semester: number) {
@@ -70,6 +80,7 @@ class Subject {
         this.semAvg[s] = avg;
       }
     }
+    localStorage.setItem(this.subjectID, JSON.stringify(this));
   }
 
   private addExam(sem: number) {
